@@ -108,6 +108,5 @@ void createRandomArray(arrays& a)
 
 	for (int i = 0; i < l; i++)
 		a[i] = rand() % 100000;
-
 }
 
