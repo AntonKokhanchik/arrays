@@ -18,6 +18,17 @@ arrays::~arrays()
 	delete[] arr;
 }
 
+void arrays::reinit(int size)
+{
+	delete[] arr;
+	length = size;
+	arr = new int[size];
+}
+
+int& arrays::operator[] (int i)
+{
+	return arr[i];
+}
 
 //базовые сортировки
 

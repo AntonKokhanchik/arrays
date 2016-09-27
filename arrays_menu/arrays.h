@@ -10,6 +10,10 @@ public:
 	arrays(int);
 	~arrays();
 
+	void reinit(int);
+
+	int& operator[] (int);
+
 	//базовые сортировки 
 
 	///<summary>производит сортировку выбором</summary>
