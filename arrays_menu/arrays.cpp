@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "arrays.h"
 
+arrays::arrays()
+{
+	length = 0;
+	arr = NULL;
+}
 
 arrays::arrays(int size)
 {
@@ -13,6 +18,17 @@ arrays::~arrays()
 	delete[] arr;
 }
 
+void arrays::reinit(int size)
+{
+	delete[] arr;
+	length = size;
+	arr = new int[size];
+}
+
+int& arrays::operator[] (int i)
+{
+	return arr[i];
+}
 
 //базовые сортировки
 

@@ -6,8 +6,13 @@ private:
 	int length;
 
 public:
+	arrays();
 	arrays(int);
 	~arrays();
+
+	void reinit(int);
+
+	int& operator[] (int);
 
 	//базовые сортировки 
 
