@@ -8,9 +8,25 @@
 
 using namespace std;
 
+char mainMenu(char ch, arrays& a);
+void printMainMenu();
+void executeMainMenu(char ch, arrays& a);
+void createArrayMenu(arrays& a);
+void printCreateArrayMenu();
+void executeCreateArrayMenu(char ch, arrays& a);
+void createArrayManually(arrays& a);
+void createRandomArray(arrays& a);
+void sortArrayMenu(arrays& a);
+void sortArrayMenu(arrays& a);
+void printSortArrayMenu();
+void executeSortArrayMenu(char ch, arrays& a);
+void searchMenu(arrays& a);
+void printSearchMenu();
+void executeSearchMenu(char ch, arrays& a);
+
 int main()
 {
-	char ch;
+	char ch = 0;
 	arrays a;
 
 	do
@@ -105,6 +121,7 @@ void createRandomArray(arrays& a)
 	int l;
 
 	cout << "Enter length: ";
+	cin >> l;
 	a.reinit(l);
 
 	for (int i = 0; i < l; i++)
