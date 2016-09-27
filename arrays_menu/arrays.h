@@ -6,6 +6,7 @@ private:
 	int length;
 
 public:
+	arrays();
 	arrays(int);
 	~arrays();
 

@@ -1,5 +1,11 @@
+#include "stdafx.h"
 #include "arrays.h"
 
+arrays::arrays()
+{
+	length = 0;
+	arr = NULL;
+}
 
 arrays::arrays(int size)
 {
