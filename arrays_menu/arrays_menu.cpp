@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 	char ch;
-	arrays a;///
+	arrays a;
 
 	do
 	{
@@ -21,7 +21,7 @@ int main()
 	return 0;
 }
 
-char mainMenu(char ch, a)
+char mainMenu(char ch, arrays& a)
 {
 	printMainMenu();
 
@@ -43,7 +43,7 @@ void printMainMenu()
 		<< "3 to find element\n";
 }
 
-void executeMain(char ch, a)
+void executeMain(char ch, arrays& a)
 {
 	switch (ch)
 	{
@@ -53,7 +53,7 @@ void executeMain(char ch, a)
 	}
 }
 
-void createArrayMenu(a)
+void createArrayMenu(arrays& a)
 {
 	char ch;
 
@@ -76,7 +76,7 @@ void printCreateArrayMenu()
 		<< "esc to cancel";
 }
 
-void executeCreateArrayMenu(char ch, a)
+void executeCreateArrayMenu(char ch, arrays& a)
 {
 	switch (ch)
 	{
@@ -85,26 +85,26 @@ void executeCreateArrayMenu(char ch, a)
 	}
 }
 
-void createArrayManually(a)
+void createArrayManually(arrays& a)
 {
 	int l;
 	cout << "Enter length: ";
 	cin >> l;
 
-	a = new array(l);
+	a.reinit(l);
 
 	cout << "enter elements:\n";
 	for (int i = 0; i < l; i++)
 		cin >> a[i];
 }
 
-void createRandomArray()
+void createRandomArray(arrays& a)
 {
-	srand(time(null));
+	srand(time(NULL));
 	int l;
 	cout << "Enter length: ";
 
-	a = new array(l);
+	a.reinit(l);
 
 	for (int i = 0; i < l; i++)
 		a[i] = rand() % 100000;
