@@ -1,7 +1,6 @@
 // arrays_menu.cpp: определяет точку входа для консольного приложения.
 //
 
-#include "stdafx.h"
 #include "arrays.h"
 #include "conio.h"
 #include "iostream"
