@@ -47,9 +47,9 @@ void arrays::selectionSort()
 		}
 		if (min != i)
 		{
-			tmp = i;
-			i = min;
-			min = tmp;
+			tmp = arr[i];
+			arr[i] = arr[min];
+			arr[min] = tmp;
 		}
 	}
 }
@@ -101,7 +101,7 @@ void arrays::shakerSort()
 				bubble = arr[i];
 			}
 	}
-}
+}		//исправить
 
 void arrays::combSort()
 {
@@ -113,7 +113,7 @@ void arrays::combSort()
 		for (int i = 0; i < step; i++)
 		{
 			int tmp = arr[i];
-			for (int j = i + step; j < length - 1; j += step)
+			for (int j = i + step; j < length; j += step)
 			{
 				if (tmp > arr[j])
 				{
@@ -129,26 +129,181 @@ void arrays::combSort()
 			}
 		}
 	}
-
-
-
-
-
 }
+
+// быстрые сортировки
 
 void arrays::quickSort()
 {
-	quickSortRecurs(arr, length);
+	quickSortRecurs(0, length-1);
 }
 
-void arrays::quickSortRecurs(int* a, int l)
+void arrays::quickSortRecurs(int min, int max)
 {
-	int sum;
-	for (int i = 0; i < length - 1; i++)
+	int middle, h, l;
+
+	if (max - min <= 10)
 	{
-		sum += arr[i];
+		for (int i = min; i <= max; i++)
+		{
+			int tmp = arr[i];
+			int j = i - 1;
+
+			for (; (j >= 0 && arr[j] > tmp); j--)
+				arr[j + 1] = arr[j];
+			arr[j + 1] = tmp;
+		}
+		return;
 	}
-	int middle = int(sum / length);
 
+	middle = arr[min];
+	l = min;
+	h = max;
 
+	while (true)
+	{
+		while (arr[h] >= middle)
+		{
+			h--;
+			if (h <= l)
+				break;
+		}
+		if (h <= l)
+		{
+			arr[l] = middle;
+			break;
+		}
+		arr[l] = arr[h];
+		l++;
+		while (arr[l] < middle)
+		{
+			l++;
+			if (l >= h)
+				break;
+		}
+		if (l >= h)
+		{
+			l = h;
+			arr[h] = middle;
+			break;
+		}
+		arr[h] = arr[l];
+	}
+	quickSortRecurs(min, l - 1);
+	quickSortRecurs(l + 1, max);
 }
+
+void arrays::piramidalSort()
+{
+	for (int i = (length / 2) - 1; i > -1; i--)
+		shiftDown(i, length);
+
+	for (int i = length - 1; i > 0; i--)
+	{
+		int tmp = arr[0];
+		arr[0] = arr[i];
+		arr[i] = tmp;
+
+		shiftDown(0, i);
+	}
+}
+
+void arrays::shiftDown(int i, int j)
+{
+	int max;
+	bool isDone = false;
+
+	while (2*i+1 < j && !isDone)
+	{
+		if (2*i+1 == j-1 || arr[2*i+1] > arr[2*i+2])
+			max = 2*i+1;
+		else
+			max = 2*i+2;
+
+		if (arr[i] < arr[max])
+		{
+			int tmp = arr[i];
+			arr[i] = arr[max];
+			arr[max] = tmp;
+			i = max;
+		}
+		else
+			isDone = true;
+	}
+}
+
+//целочисленные сортировки
+
+void arrays::blockSort() //есть проблема
+{
+	int** bucket = new int* [10];
+	for(int i=0;i<10;i++)
+		bucket[i] = new int[length];
+
+	for (int k = 1; k <= 100000; k *= 10)
+	{
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < length; j++)
+				bucket[i][j] = -1;
+
+		int count = 0;
+
+		for (int i = 0; i < length; i++)
+		{
+			int tmp = (arr[i] / k) % 10;
+			bucket[tmp][i] = arr[i];//здесь плохо, не сортирует совсем из-за этого
+		}
+
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < length; j++)
+				if (bucket[i][j] == -1)
+					break;
+				else
+				{
+					arr[count] = bucket[i][j];
+					count++;
+				}
+	}
+	for (int i = 0; i < 10; i++)
+		delete[] bucket[i];
+	delete[] bucket;
+}
+
+void arrays::bitSort() //почему-то не работает с двузначными
+{
+	//n >> p & 1           p бит числа n 
+	int* tmp = new int[length]; //карман
+	for (int i = 0; i < sizeof(int); i++)
+	{
+		int zeroPtr = 0, onePtr = length - 1; //указатели на места для вставки
+
+		for (int j = 0; j < length; j++) //распределение
+		{
+			if (((arr[j] >> i) & 1) == 0)
+			{
+				tmp[zeroPtr] = arr[j];
+				zeroPtr++;
+			}
+			else
+			{
+				tmp[onePtr] = arr[j];
+				onePtr--;
+			}
+		}
+
+		int k = 0;                        //сборка
+
+		for (int j = 0; j < zeroPtr; j++)
+		{
+			arr[k] = tmp[j];
+			k++;
+		}
+		
+		for (int j = length - 1; j > onePtr; j--)
+		{
+			arr[k] = tmp[j];
+			k++;
+		}
+	}
+}
+

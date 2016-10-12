@@ -5,10 +5,14 @@ private:
 	int* arr;
 	int length;
 
+	void quickSortRecurs(int, int);
+	void shiftDown(int, int);
 public:
 	arrays();
 	arrays(int);
 	~arrays();
+
+	int Length() { return length; }
 
 	void reinit(int);
 
@@ -41,7 +45,6 @@ public:
 	void binaryTrackingSearch();
 
 
-	void quickSortRecurs(int*, int);
 
 };
 
