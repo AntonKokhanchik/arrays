@@ -23,6 +23,7 @@ void executeSortArrayMenu(char ch, arrays& a);
 void searchMenu(arrays& a);
 void printSearchMenu();
 void executeSearchMenu(char ch, arrays& a);
+void printArray(arrays& a);
 
 int main()
 {
@@ -36,14 +37,14 @@ int main()
 
 	return 0;
 }
-
+//
 char mainMenu(char ch, arrays& a)
 {
 	printMainMenu();
 
 	do {
 		ch = _getch();
-	} while (ch != 27 || ch < '1' || ch > '3');
+	} while (ch != 27 && ch < '1' && ch > '4');
 
 	if (ch != 27)
 		executeMainMenu(ch, a);
@@ -53,10 +54,12 @@ char mainMenu(char ch, arrays& a)
 
 void printMainMenu()
 {
+	cout << "\n\n";
 	cout << "Press:\n"
 		<< "1 to create array\n"
 		<< "2 to sort array\n"
 		<< "3 to find element\n"
+		<< "4 to print array\n"
 		<< "esc to exit";
 }
 
@@ -67,9 +70,10 @@ void executeMainMenu(char ch, arrays& a)
 	case '1': createArrayMenu(a); break;
 	case '2': sortArrayMenu(a); break;
 	case '3': searchMenu(a); break;
+	case '4': printArray(a); break;
 	}
 }
-
+//
 void createArrayMenu(arrays& a)
 {
 	char ch;
@@ -79,7 +83,7 @@ void createArrayMenu(arrays& a)
 	do
 	{
 		ch = _getch();
-	} while (ch != 27 || ch < '1' || ch > '2');
+	} while (ch != 27 && ch < '1' && ch > '2');
 
 	if (ch != 27)
 		executeCreateArrayMenu(ch, a);
@@ -87,9 +91,10 @@ void createArrayMenu(arrays& a)
 
 void printCreateArrayMenu()
 {
-	cout << "Press\n"
+	cout << "\n\n";
+	cout << "Press:\n"
 		<< "1 to to create array manually\n"
-		<< "2 to create random array"
+		<< "2 to create random array\n"
 		<< "esc to cancel";
 }
 
@@ -106,6 +111,8 @@ void createArrayManually(arrays& a)
 {
 	int l;
 
+	cout << "\n\n";
+	cout << "Manual array creation\n";
 	cout << "Enter length: ";
 	cin >> l;
 	a.reinit(l);
@@ -120,14 +127,16 @@ void createRandomArray(arrays& a)
 	srand(time(NULL));
 	int l;
 
+	cout << "\n\n";
+	cout << "Random array creation\n";
 	cout << "Enter length: ";
 	cin >> l;
 	a.reinit(l);
 
 	for (int i = 0; i < l; i++)
-		a[i] = rand() % 100000;
+		a[i] = rand() % 100;
 }
-
+//
 void sortArrayMenu(arrays& a)
 {
 	char ch;
@@ -137,7 +146,7 @@ void sortArrayMenu(arrays& a)
 	do
 	{
 		ch = _getch();
-	} while (ch != 27 || ch < '1' || ch > '8');
+	} while (ch != 27 && ch < '1' && ch > '8');
 
 	if (ch != 27)
 		executeSortArrayMenu(ch, a);
@@ -145,6 +154,7 @@ void sortArrayMenu(arrays& a)
 
 void printSortArrayMenu()
 {
+	cout << "\n\n";
 	cout << "press to execute:\n"
 		<< "1 - selection sort\n"
 		<< "2 - insertion sort\n"
@@ -171,7 +181,7 @@ void executeSortArrayMenu(char ch, arrays& a)
 	case '8': a.bitSort(); break;
 	}
 }
-
+//
 void searchMenu(arrays& a)
 {
 	char ch;
@@ -181,7 +191,7 @@ void searchMenu(arrays& a)
 	do
 	{
 		ch = _getch();
-	} while (ch != 27 || ch < '1' || ch > '2');
+	} while (ch != 27 && ch < '1' && ch > '2');
 
 	if (ch != 27)
 		executeSearchMenu(ch, a);
@@ -199,12 +209,24 @@ void executeSearchMenu(char ch, arrays& a)
 {
 	int el;
 
+	cout << "\n\n";
+	cout << "Searching\n";
 	cout << "what you want to find?: ";
 	cin >> el;
 
 	switch (ch)
 	{
-	case '1': a.interpolationSearch();
-	case '2': a.binaryTrackingSearch();
+	//case '1': a.interpolationSearch();
+	//case '2': a.binaryTrackingSearch();
 	}
+}
+
+void printArray(arrays& a)
+{
+	cout << "\n\n";
+
+	for (int i = 0; i < a.Length(); i++)
+		cout << a[i] << "  ";
+
+	_getch();
 }
