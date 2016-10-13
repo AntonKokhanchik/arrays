@@ -274,7 +274,7 @@ void arrays::bitSort() //почему-то не работает с двузначными
 {
 	//n >> p & 1           p бит числа n 
 	int* tmp = new int[length]; //карман
-	for (int i = 0; i < sizeof(int); i++)
+	for (int i = 0; i < sizeof(int)*8; i++)
 	{
 		int zeroPtr = 0, onePtr = length - 1; //указатели на места для вставки
 
