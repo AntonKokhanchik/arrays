@@ -41,7 +41,7 @@ public:
 
 	//поиски
 
-	void interpolationSearch();
+	int interpolationSearch(int);
 	void binaryTrackingSearch();
 
 

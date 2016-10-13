@@ -307,3 +307,30 @@ void arrays::bitSort() //почему-то не работает с двузначными
 	}
 }
 
+// поиски
+
+int arrays::interpolationSearch(int target)
+{
+	int middle;
+	int l = 0;
+	int r = length - 1;
+
+	while (arr[l] < target && arr[r] > target)
+	{
+		middle = l + int(((target - arr[l])*(r - l)) / (arr[r] - arr[l]));
+
+		if (arr[middle] < target)
+			l = middle + 1;
+		else if (arr[middle] > target)
+			r = middle - 1;
+		else
+			return middle;
+	}
+
+	if (arr[l] == target)
+		return l;
+	else if (arr[r] == target)
+		return r;
+	else
+		return -1;          //элемент не найден
+}

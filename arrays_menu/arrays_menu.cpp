@@ -54,13 +54,13 @@ char mainMenu(char ch, arrays& a)
 
 void printMainMenu()
 {
-	cout << "\n\n";
 	cout << "Press:\n"
 		<< "1 to create array\n"
 		<< "2 to sort array\n"
 		<< "3 to find element\n"
 		<< "4 to print array\n"
 		<< "esc to exit";
+	cout << "\n\n";
 }
 
 void executeMainMenu(char ch, arrays& a)
@@ -91,11 +91,11 @@ void createArrayMenu(arrays& a)
 
 void printCreateArrayMenu()
 {
-	cout << "\n\n";
 	cout << "Press:\n"
 		<< "1 to to create array manually\n"
 		<< "2 to create random array\n"
 		<< "esc to cancel";
+	cout << "\n\n";
 }
 
 void executeCreateArrayMenu(char ch, arrays& a)
@@ -120,6 +120,7 @@ void createArrayManually(arrays& a)
 	cout << "enter elements:\n";
 	for (int i = 0; i < l; i++)
 		cin >> a[i];
+	cout << "\n\n";
 }
 
 void createRandomArray(arrays& a)
@@ -135,6 +136,7 @@ void createRandomArray(arrays& a)
 
 	for (int i = 0; i < l; i++)
 		a[i] = rand() % 100;
+	cout << "\n\n";
 }
 //
 void sortArrayMenu(arrays& a)
@@ -154,7 +156,6 @@ void sortArrayMenu(arrays& a)
 
 void printSortArrayMenu()
 {
-	cout << "\n\n";
 	cout << "press to execute:\n"
 		<< "1 - selection sort\n"
 		<< "2 - insertion sort\n"
@@ -165,6 +166,7 @@ void printSortArrayMenu()
 		<< "7 - block sort\n"
 		<< "8 - bit sort\n"
 		<< "esc to cancel";
+	cout << "\n\n";
 }
 
 void executeSortArrayMenu(char ch, arrays& a)
@@ -203,30 +205,35 @@ void printSearchMenu()
 		<< "1 - interpolation search\n"
 		<< "2 - binary tracking search\n"
 		<< "esc to cncel";
+	cout << "\n\n";
 }
 
 void executeSearchMenu(char ch, arrays& a)
 {
-	int el;
+	int ask, answer;
 
-	cout << "\n\n";
 	cout << "Searching\n";
 	cout << "what you want to find?: ";
-	cin >> el;
+	cin >> ask;
 
 	switch (ch)
 	{
-	//case '1': a.interpolationSearch();
-	//case '2': a.binaryTrackingSearch();
+	case '1': answer = a.interpolationSearch(ask);
+	//case '2': answer = a.binaryTrackingSearch(ask);
 	}
-}
 
+	if (answer == -1)
+		cout << "no asking element in array";
+	else
+		cout << "asking element is a number " << answer << " in array";
+	
+	cout << "\n\n";
+}
+//
 void printArray(arrays& a)
 {
-	cout << "\n\n";
-
 	for (int i = 0; i < a.Length(); i++)
 		cout << a[i] << "  ";
 
-	_getch();
+	cout << "\n\n";
 }
