@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "arrays.h"
+#include "list"
+
+using std::list;
 
 arrays::arrays()
 {
@@ -71,14 +74,17 @@ void arrays::insertionSort()
 
 void arrays::shakerSort()
 {
-	for (int left = 0, right = length - 1, k = 0; left < right; k++)
+	for (int left = 0, right = length - 1, k = 0; left <= right; k++)
 	{
 		while (arr[left] < arr[left + 1])
-			left++;
+			if (left + 2 < length - k)
+				left++;
+			else
+				return;
 
 		int bubble = arr[left];
 
-		for (int i = left + 1; i < length - 1 - k; i++)
+		for (int i = left + 1; i < length - k; i++)
 			if (arr[i] < bubble)
 				arr[i - 1] = arr[i];
 			else
@@ -86,13 +92,17 @@ void arrays::shakerSort()
 				arr[i - 1] = bubble;
 				bubble = arr[i];
 			}
+		arr[length - k - 1] = bubble;
 
 		while (arr[right] > arr[right - 1])
-			right--;
+			if (right - 2 >= k)
+				right--;
+			else
+				return;
 
 		bubble = arr[right];
 
-		for (int i = right - 1; i > k; i--)
+		for (int i = right - 1; i >= k; i--)
 			if (arr[i] > bubble)
 				arr[i + 1] = arr[i];
 			else
@@ -100,8 +110,9 @@ void arrays::shakerSort()
 				arr[i + 1] = bubble;
 				bubble = arr[i];
 			}
+		arr[k] = bubble;
 	}
-}		//исправить
+}
 
 void arrays::combSort()
 {
@@ -234,38 +245,28 @@ void arrays::shiftDown(int i, int j)
 
 //целочисленные сортировки
 
-void arrays::blockSort() //есть проблема
+void arrays::blockSort()
 {
-	int** bucket = new int* [10];
-	for(int i=0;i<10;i++)
-		bucket[i] = new int[length];
+	list<int>* bucket = new list<int>[10];
 
 	for (int k = 1; k <= 100000; k *= 10)
 	{
-		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < length; j++)
-				bucket[i][j] = -1;
-
-		int count = 0;
-
 		for (int i = 0; i < length; i++)
 		{
 			int tmp = (arr[i] / k) % 10;
-			bucket[tmp][i] = arr[i];//здесь плохо, не сортирует совсем из-за этого
+			bucket[tmp].push_back(arr[i]);
 		}
 
+		int count = 0;
+
 		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < length; j++)
-				if (bucket[i][j] == -1)
-					break;
-				else
-				{
-					arr[count] = bucket[i][j];
-					count++;
-				}
+			while(!bucket[i].empty())
+			{
+				arr[count] = bucket[i].front();
+				bucket[i].pop_front();
+				count++;
+			}
 	}
-	for (int i = 0; i < 10; i++)
-		delete[] bucket[i];
 	delete[] bucket;
 }
 
