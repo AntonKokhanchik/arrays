@@ -5,8 +5,12 @@
 #include "conio.h"
 #include "iostream"
 #include "time.h"
+#include "windows.h"
 
 using namespace std;
+
+typedef void (arrays:: *sort)();
+typedef int (arrays:: *search)(int);
 
 char mainMenu(char ch, arrays& a);
 void printMainMenu();
@@ -24,6 +28,8 @@ void searchMenu(arrays& a);
 void printSearchMenu();
 void executeSearchMenu(char ch, arrays& a);
 void printArray(arrays& a);
+void sortTimer(char* str, sort f, arrays& a);
+int searchTimer(int ask, char* str, search f, arrays& a);
 
 int main()
 {
@@ -173,14 +179,14 @@ void executeSortArrayMenu(char ch, arrays& a)
 {
 	switch (ch)
 	{
-	case '1': a.selectionSort(); break;
-	case '2': a.insertionSort(); break;
-	case '3': a.shakerSort(); break;
-	case '4': a.combSort(); break;
-	case '5': a.quickSort(); break;
-	case '6': a.piramidalSort(); break;
-	case '7': a.blockSort(); break;
-	case '8': a.bitSort(); break;
+	case '1': sortTimer("selection sort", &arrays::selectionSort, a); break;
+	case '2': sortTimer("insertion sort", &arrays::insertionSort, a); break;
+	case '3': sortTimer("shaker sort", &arrays::shakerSort, a); break;
+	case '4': sortTimer("comb sort", &arrays::combSort, a); break;
+	case '5': sortTimer("quick sort", &arrays::quickSort, a); break;
+	case '6': sortTimer("piramidal sort", &arrays::piramidalSort, a); break;
+	case '7': sortTimer("block sort", &arrays::blockSort, a); break;
+	case '8': sortTimer("bit sort", &arrays::bitSort, a); break;
 	}
 }
 //
@@ -214,12 +220,13 @@ void executeSearchMenu(char ch, arrays& a)
 
 	cout << "Searching\n";
 	cout << "what you want to find?: ";
+	cout << "\n\n";
 	cin >> ask;
 
 	switch (ch)
 	{
-	case '1': answer = a.interpolationSearch(ask);
-	//case '2': answer = a.binaryTrackingSearch(ask);
+	case '1': answer = searchTimer(ask, "interpolation search", &arrays::interpolationSearch, a);
+	//case '2': answer = searchTimer(ask, :binary tracking search", &arrays::binaryTrackingSearch, a);
 	}
 
 	if (answer == -1)
@@ -236,4 +243,29 @@ void printArray(arrays& a)
 		cout << a[i] << "  ";
 
 	cout << "\n\n";
+}
+
+void sortTimer(char* str, sort f, arrays& a)
+{
+	int start, stop;
+
+	cout << "doing " << str << ":\n";
+	start = GetTickCount();
+	(a.*f)();
+	stop = GetTickCount();
+	cout << "done with " << stop - start << " ticks";
+	cout << "\n\n";
+}
+
+int searchTimer(int ask, char* str, search f, arrays& a)
+{
+	int start, stop, answer;
+
+	cout << "doing " << str << ":\n";
+	start = GetTickCount();
+	answer = (a.*f)(ask);
+	stop = GetTickCount();
+	cout << "done with " << stop - start << " ticks";
+	cout << "\n\n";
+	return answer;
 }

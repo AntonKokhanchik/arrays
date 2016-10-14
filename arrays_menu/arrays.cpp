@@ -76,7 +76,7 @@ void arrays::shakerSort()
 {
 	for (int left = 0, right = length - 1, k = 0; left <= right; k++)
 	{
-		while (arr[left] < arr[left + 1])
+		while (arr[left] <= arr[left + 1])
 			if (left + 2 < length - k)
 				left++;
 			else
@@ -94,7 +94,7 @@ void arrays::shakerSort()
 			}
 		arr[length - k - 1] = bubble;
 
-		while (arr[right] > arr[right - 1])
+		while (arr[right] >= arr[right - 1])
 			if (right - 2 >= k)
 				right--;
 			else
@@ -127,9 +127,7 @@ void arrays::combSort()
 			for (int j = i + step; j < length; j += step)
 			{
 				if (tmp > arr[j])
-				{
 					arr[j - step] = arr[j];
-				}
 				else
 				{
 					arr[j - step] = tmp;
@@ -270,10 +268,11 @@ void arrays::blockSort()
 	delete[] bucket;
 }
 
-void arrays::bitSort() //почему-то не работает с двузначными
+void arrays::bitSort()
 {
 	//n >> p & 1           p бит числа n 
 	int* tmp = new int[length]; //карман
+
 	for (int i = 0; i < sizeof(int)*8; i++)
 	{
 		int zeroPtr = 0, onePtr = length - 1; //указатели на места для вставки
@@ -306,6 +305,8 @@ void arrays::bitSort() //почему-то не работает с двузначными
 			k++;
 		}
 	}
+
+	delete[] tmp;
 }
 
 // поиски
