@@ -4,9 +4,11 @@ class arrays
 private:
 	int* arr;
 	int length;
+	int hunt;
 
 	void quickSortRecurs(int, int);
 	void shiftDown(int, int);
+	int binarySearch(int, int, int);
 public:
 	arrays();
 	arrays(int);

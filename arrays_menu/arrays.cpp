@@ -7,6 +7,7 @@ using std::list;
 arrays::arrays()
 {
 	length = 0;
+	hunt = -1;
 	arr = NULL;
 }
 
@@ -26,6 +27,7 @@ void arrays::reinit(int size)
 	delete[] arr;
 	length = size;
 	arr = new int[size];
+	hunt = -1;
 }
 
 int& arrays::operator[] (int i)
@@ -326,13 +328,85 @@ int arrays::interpolationSearch(int target)
 		else if (arr[middle] > target)
 			r = middle - 1;
 		else
-			return middle;
+			return hunt = middle;
 	}
 
 	if (arr[l] == target)
-		return l;
+		return hunt = l;
 	else if (arr[r] == target)
-		return r;
+		return hunt = r;
 	else
 		return -1;          //элемент не найден
+}
+
+int arrays::binaryTrackingSearch(int target)
+{
+	if (hunt == -1)
+		return binarySearch(0, length - 1, target);
+
+	if (target == arr[hunt])
+		return hunt;
+
+	if ((hunt == 0 && target < arr[hunt]) || (hunt == length - 1 && target > arr[hunt]))
+		return -1;
+
+	int left, right;
+	int ml = 1;
+
+	if (target < arr[hunt])
+	{
+		right = hunt;
+		while (true)
+		{
+			left = right - ml;
+			if (left < 0)
+				left = 0;
+
+			if (target == arr[left])
+				return hunt = left;
+			else if (target >= arr[left])
+				return binarySearch(left, right, target);
+			else
+				if (left == 0)
+					return -1;
+				else
+					ml *= 2;
+		}
+	}
+	else
+	{
+		left = hunt;
+		while (true)
+		{
+			right = left + ml;
+			if (right >= length)
+				right = length - 1;
+
+			if (target == arr[right])
+				return hunt = right;
+			else if (target < arr[right])
+				return binarySearch(left, right, target);
+			else
+				if (right == length - 1)
+					return -1;
+				else
+					ml *= 2;
+		}
+	}
+}
+
+int arrays::binarySearch(int left, int right, int target)
+{
+	int middle;
+	while (right > left)
+	{
+		middle = int((right + left) / 2);
+		if (target == arr[middle])
+			return hunt = middle;
+		else if (target < arr[middle])
+			right = middle - 1;
+		else
+			left = middle + 1;
+	}
+	return -1;
 }

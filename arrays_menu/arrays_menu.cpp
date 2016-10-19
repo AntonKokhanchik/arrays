@@ -50,7 +50,7 @@ char mainMenu(char ch, arrays& a)
 
 	do {
 		ch = _getch();
-	} while (ch != 27 && ch < '1' && ch > '4');
+	} while (ch != 27 && (ch < '1' || ch > '4'));
 
 	if (ch != 27)
 		executeMainMenu(ch, a);
@@ -89,7 +89,7 @@ void createArrayMenu(arrays& a)
 	do
 	{
 		ch = _getch();
-	} while (ch != 27 && ch < '1' && ch > '2');
+	} while (ch != 27 && (ch < '1' || ch > '2'));
 
 	if (ch != 27)
 		executeCreateArrayMenu(ch, a);
@@ -141,7 +141,7 @@ void createRandomArray(arrays& a)
 	a.reinit(l);
 
 	for (int i = 0; i < l; i++)
-		a[i] = rand() % 100;
+		a[i] = rand() % 10000;
 	cout << "\n\n";
 }
 //
@@ -154,7 +154,7 @@ void sortArrayMenu(arrays& a)
 	do
 	{
 		ch = _getch();
-	} while (ch != 27 && ch < '1' && ch > '8');
+	} while (ch != 27 && (ch < '1' || ch > '8'));
 
 	if (ch != 27)
 		executeSortArrayMenu(ch, a);
@@ -199,7 +199,7 @@ void searchMenu(arrays& a)
 	do
 	{
 		ch = _getch();
-	} while (ch != 27 && ch < '1' && ch > '2');
+	} while (ch != 27 && (ch < '1' || ch > '2'));
 
 	if (ch != 27)
 		executeSearchMenu(ch, a);
@@ -225,8 +225,8 @@ void executeSearchMenu(char ch, arrays& a)
 
 	switch (ch)
 	{
-	case '1': answer = searchTimer(ask, "interpolation search", &arrays::interpolationSearch, a);
-	//case '2': answer = searchTimer(ask, :binary tracking search", &arrays::binaryTrackingSearch, a);
+	case '1': answer = searchTimer(ask, "interpolation search", &arrays::interpolationSearch, a); break;
+	case '2': answer = searchTimer(ask, "binary tracking search", &arrays::binaryTrackingSearch, a); break;
 	}
 
 	if (answer == -1)
